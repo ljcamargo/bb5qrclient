@@ -75,29 +75,13 @@ public final class BarcodeScanner {
 		_viewFinder = (Field) _vc.initDisplayMode(VideoControl.USE_GUI_PRIMITIVE, "net.rim.device.api.ui.Field");
 		_vc.setDisplayFullScreen(true);
         _vc.setVisible(true);
-        _player.start();
-
-        //EnhancedFocusControl efc = (EnhancedFocusControl)p.getControl("net.rim.device.api.amms.control.camera.EnhancedFocusControl");
-        //efc.startAutoFocus();
-		_player.start();
-
-		
+        _player.start();		
 	}
 
-	/**
-	 * Get the player instance
-	 * 
-	 * @return player instance
-	 */
 	public Player getPlayer() {
 		return _player;
 	}
 
-	/**
-	 * Get the video control
-	 * 
-	 * @return video control instance
-	 */
 	public VideoControl getVideoControl() {
 		return _vc;
 	}
@@ -119,7 +103,7 @@ public final class BarcodeScanner {
 
 			task = new BarcodeScanTask();
 			timer = new Timer();
-			timer.schedule(task, 0, 1000); // 2 seconds once
+			timer.schedule(task, 0, 1250); // 2 seconds once
 
 		} else {
 			throw new MediaException("Video Control is not initialized");
@@ -141,22 +125,67 @@ public final class BarcodeScanner {
 	public void setupEncoding(String encodingType) {
 		_encoding = encodingType;
 	}
+	
+	public void readNow() {
+		if (timer != null) {
+			timer.cancel(); // stop the timer
+		}
+		System.out.println("--------------------------------->TimerTask run... preparing Capture");
+		Bitmap bmpScreenshot = new Bitmap(Display.getWidth(),Display.getHeight());
+		try {
+			System.out.println("--------------------------------->Capturing First Method");
+			byte[] rawImage = _vc.getSnapshot(null);
+			Bitmap newbitmap = Bitmap.createBitmapFromBytes(rawImage, 0,rawImage.length, 1);
+			bmpScreenshot = newbitmap;
+		} catch (Exception e1) {
+			System.out.println("--------------------------------->Failed First Method, second attempted");
+			Display.screenshot(bmpScreenshot);
+			e1.printStackTrace();
+		}      
+		System.out.println("--------------------------------->Captured");
+		MultiFormatReader reader = new MultiFormatReader();
+		LuminanceSource source = new BitmapLuminanceSource(bmpScreenshot);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+		Hashtable hints = null;
+		if (_decoder != null) {
+			hints = _decoder._hints;
+		}
+
+		if (hints == null) {
+			hints = new Hashtable(1);
+			hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+		}
+
+		Result result;
+		String rawText = "";
+		try {
+			System.out.println("--------------------------------->Trying DECODE");
+			result = reader.decode(bitmap, hints);
+			System.out.println("--------------------------------->QR Code DECODED");
+			rawText = result.getText();
+			_listener.barcodeDecoded(rawText);
+			_listener.barcodeDecodeProcessFinish();
+		} catch (NotFoundException e) {
+			System.out.println("--------------------------------->FAIL TO DECODE!!!!");
+			_listener.barcodeFailDecoded(e);
+		}
+	}
 
 	final class BarcodeScanTask extends TimerTask {
 
 		public void run() {
 
-				System.out
-						.println("--------------------------------->TimerTask run... preparing Capture");
+				System.out.println("--------------------------------->TimerTask run... preparing Capture");
 				Bitmap bmpScreenshot = new Bitmap(Display.getWidth(),Display.getHeight());
-				//Display.screenshot(bmpScreenshot);
 				try {
+					System.out.println("--------------------------------->Capturing First Method");
 					byte[] rawImage = _vc.getSnapshot(null);
 					Bitmap newbitmap = Bitmap.createBitmapFromBytes(rawImage, 0,rawImage.length, 1);
-					//saveScreenShot(newbitmap);
 					bmpScreenshot = newbitmap;
-				} catch (MediaException e1) {
-					// TODO Auto-generated catch block
+				} catch (Exception e1) {
+					System.out.println("--------------------------------->Failed First Method, second attempted");
+					Display.screenshot(bmpScreenshot);
 					e1.printStackTrace();
 				}      
 				//saveScreenShot(bmpScreenshot);
@@ -177,24 +206,20 @@ public final class BarcodeScanner {
 
 				if (hints == null) {
 					hints = new Hashtable(1);
-					hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+					//hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
 				}
 
 				Result result;
 				String rawText = "";
 				try {
-					System.out
-							.println("--------------------------------->Trying DECODE");
+					System.out.println("--------------------------------->Trying DECODE");
 					result = reader.decode(bitmap, hints);
-					
-					System.out
-							.println("--------------------------------->QR Code DECODED");
+					System.out.println("--------------------------------->QR Code DECODED");
 					rawText = result.getText();
 					_listener.barcodeDecoded(rawText);
 					_listener.barcodeDecodeProcessFinish();
 				} catch (NotFoundException e) {
-					System.out
-							.println("--------------------------------->FAIL TO DECODE!!!!");
+					System.out.println("--------------------------------->FAIL TO DECODE!!!!");
 					_listener.barcodeFailDecoded(e);
 				}
 

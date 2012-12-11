@@ -152,6 +152,7 @@ public final class MultiFormatReader implements Reader {
   private Result decodeInternal(BinaryBitmap image) throws NotFoundException {
     int size = readers.size();
     for (int i = 0; i < size; i++) {
+      System.out.println("READING meth "+i);
       Reader reader = (Reader) readers.elementAt(i);
       try {
         return reader.decode(image, hints);

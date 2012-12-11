@@ -144,7 +144,8 @@ public class Layout extends UserInterface {
 		   
 		   final BitmapField bmFieldSpan = new BitmapField(blankbmp,BitmapField.NON_FOCUSABLE);
 				
-		   CustomButtonField cbfFriends = new CustomButtonField(btnw, "", friendsoff.getBitmap(), friendson.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER) {
+		   CustomButtonField cbfFriends = 
+			   new CustomButtonField(btnw, "", friendsoff.getBitmap(), friendson.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
 			   protected boolean navigationClick(int status, int time)
 			    {
 			    	c.action_callback("web_friends", "", "");
@@ -152,7 +153,8 @@ public class Layout extends UserInterface {
 			    }
 		   };
 		    
-		   CustomButtonField cbfButton = new CustomButtonField(btnw, "", buttonoff.getBitmap(), buttonon.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER) {
+		   CustomButtonField cbfButton = 
+			   new CustomButtonField(btnw, "", buttonoff.getBitmap(), buttonon.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
 				protected boolean navigationClick(int status, int time)
 			    {
 			       c.action_callback("qr_start", "", "");

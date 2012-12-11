@@ -24,6 +24,7 @@ import net.rim.device.api.ui.container.MainScreen;
 public class MoozoMain extends CMainScreen {
     public Layout La;
 	public UiApplication theApp;
+	String model = "/bar/id_bar/table/table_nr/fb/fb_id";
     String param = "/bar/id_bar/table/table_nr/fb/fb_id";
     String baseurl = "http://dev.moozo.com.ar/moozo/webapi";
     String inviteurl = "http://dev.moozo.com.ar/moozo/webapi/friends";
@@ -72,7 +73,7 @@ public class MoozoMain extends CMainScreen {
     }
     
     public boolean paramIsValid(String param) {
-    	if ((param.indexOf("table/")>=0)&&(param.indexOf("table/"))>0) {
+    	if ((param.indexOf("table/")>=0)&&(param.indexOf("bar/"))>=0) {
     		return true;
     	}
     	return false;
@@ -96,11 +97,13 @@ public class MoozoMain extends CMainScreen {
 			} catch (MediaException e) {
 				e.printStackTrace();
 			}
-			/*
-			synchronized (Application.getEventLock()) {
-				UiApplication.getUiApplication().popScreen(ViewFinderScreen.this);
+			try {
+				synchronized (Application.getEventLock()) {
+					UiApplication.getUiApplication().popScreen(ViewFinderScreen.this);
+				}
+			} catch (Exception e) {
+				
 			}
-			*/
 		}
 
 		public ViewFinderScreen() {
@@ -109,7 +112,7 @@ public class MoozoMain extends CMainScreen {
 			Vector formats = new Vector(1);
 
 			formats.addElement(BarcodeFormat.QR_CODE); 
-			hints.put(DecodeHintType.TRY_HARDER, formats);
+			hints.put(DecodeHintType.POSSIBLE_FORMATS, formats);
 			
 			
 			decoder = new BarcodeDecoder(hints);
@@ -158,20 +161,12 @@ public class MoozoMain extends CMainScreen {
 				e.printStackTrace();
 			}
 		}
-
+		/*
 		protected boolean navigationClick(int arg0, int arg1) {
-			// TODO Auto-generated method stub
-			try {
-				scanner.stopScan();
-			} catch (MediaException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.close();
-			decodedQR();
+			scanner.readNow();
 			return true;
 		}
-
+		 */
 		public boolean onClose() {
 			terminateScanner();
 			return super.onClose();
