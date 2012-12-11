@@ -1,0 +1,76 @@
+RIM-COD-SHA1-9: c8 29 3e da 0a cc 4b fa 22 13 28 1d 01 f2 36 02 39 08 ab 6f
+RIM-COD-SHA1-8: e2 b6 de 5f 1e b1 c4 25 d6 60 39 53 50 a1 c6 1f 8a 4c 9b e7
+RIM-COD-SHA1-7: 75 5d ca ce 50 df 61 5d 4e b7 a4 88 c5 70 87 08 b5 1b a6 90
+RIM-COD-SHA1-6: 9b 79 df fc 9a c1 8a 45 32 15 96 5b 74 f7 cf 5e 9b 2f 10 4a
+RIM-COD-SHA1-5: 32 90 55 44 c0 46 83 3a d6 c3 43 cc 7d 3a 30 cb bf 0c f0 b8
+RIM-COD-SHA1-4: 11 79 da 6c 09 80 fa 5b f8 e0 a8 64 b9 75 11 52 82 ae 0d d4
+RIM-COD-SHA1-3: fd 94 37 fb fc d8 f1 68 e7 9b 86 3b 4d 49 4d 4b f3 39 02 f4
+RIM-COD-SHA1-2: 40 36 58 e9 c7 59 6e 20 1e 20 17 5b 75 98 25 60 7e dc 00 74
+RIM-COD-SHA1-1: 45 50 b9 88 c1 fe 6c 61 15 0f 93 17 11 ad 37 81 9d c7 e1 41
+RIM-COD-Size-20: 59912
+RIM-COD-URL-19: Moozo-19.cod
+RIM-COD-URL-18: Moozo-18.cod
+RIM-COD-URL-17: Moozo-17.cod
+RIM-COD-URL-16: Moozo-16.cod
+RIM-COD-URL-15: Moozo-15.cod
+RIM-COD-URL-14: Moozo-14.cod
+RIM-COD-URL-13: Moozo-13.cod
+RIM-COD-URL-12: Moozo-12.cod
+RIM-COD-Size: 85240
+RIM-COD-URL-11: Moozo-11.cod
+RIM-COD-URL-10: Moozo-10.cod
+MIDlet-Vendor: BlackBerry Developer
+Manifest-Version: 1.0
+RIM-MIDlet-Flags-1: 0
+RIM-COD-Size-19: 50288
+RIM-COD-Size-18: 55464
+RIM-COD-Size-17: 50296
+RIM-COD-Size-16: 50296
+RIM-COD-Size-15: 57488
+RIM-COD-Size-14: 50200
+RIM-COD-Size-13: 42076
+RIM-COD-Size-12: 43816
+RIM-COD-Size-11: 50216
+RIM-COD-Size-10: 50296
+MIDlet-Version: 1.0.0
+MicroEdition-Profile: MIDP-2.0
+RIM-COD-SHA1-20: 46 d3 35 6e 9a 9c a8 36 fc 55 37 d5 42 4f c5 5d 6a e8 6f 04
+RIM-COD-URL: Moozo.cod
+RIM-COD-Creation-Time: 1355219050
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Jar-URL: Moozo.jar
+RIM-COD-SHA1-19: 2f 28 81 d1 1e eb 41 6b b0 fc d5 92 5f 12 51 fa 8b ea 01 72
+RIM-COD-SHA1-18: 16 67 0e 74 f5 1c 0f 12 42 8c d5 b5 1c 94 da ca 28 b5 2b 65
+RIM-COD-SHA1-17: 39 2a 38 7a 17 32 0d 35 28 1b 84 32 5f 03 89 b4 5f 95 74 38
+RIM-COD-SHA1-16: e3 ca b4 17 d5 1a 0d f9 97 3a 9f 24 0d bb 7a 31 d9 b5 4b 09
+RIM-COD-SHA1-15: 6b df d1 09 38 0f 37 73 f5 dd 6d 0b e5 bd 20 36 1c 9a 04 c7
+RIM-COD-SHA1-14: 06 52 2f 90 a9 5f 0c 6a d6 c7 c1 b3 25 97 9c 62 10 d0 0c 87
+RIM-COD-SHA1-13: 84 2e 6c 01 92 a3 03 45 a5 16 39 b4 25 0c ed a5 e0 48 47 ca
+RIM-COD-SHA1-12: 7b 3b 69 ef 47 27 d0 1b b1 17 6d 86 2e 03 fb a5 5d 61 0b f8
+RIM-COD-Size-9: 57868
+RIM-COD-SHA1-11: b6 fe f4 ad 0a c9 0f ef 1c 3d 36 a8 c0 00 70 46 d1 1f c6 e8
+RIM-COD-Size-8: 52648
+RIM-COD-SHA1-10: 04 ba 65 ca dc ae e4 58 ec c9 fd 8a 29 0a 1e ec cf 84 e3 bb
+RIM-COD-Size-7: 50296
+RIM-COD-Size-6: 50296
+RIM-COD-Size-5: 50296
+RIM-COD-Size-4: 54068
+RIM-COD-Size-3: 50200
+RIM-COD-Size-2: 55512
+RIM-COD-Size-1: 73684
+MIDlet-1: Moozo,img/icon.png,
+MIDlet-Name: Moozo
+RIM-COD-SHA1: 47 52 6e 60 d6 c2 3d 6a 36 2d 74 25 2f c4 77 c7 38 cc d6 66
+RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_networkapi,net_rim_bbapi_browser
+MIDlet-Jar-Size: 2330884
+RIM-COD-URL-9: Moozo-9.cod
+RIM-COD-URL-8: Moozo-8.cod
+RIM-COD-URL-7: Moozo-7.cod
+RIM-COD-URL-6: Moozo-6.cod
+RIM-COD-URL-5: Moozo-5.cod
+RIM-COD-URL-4: Moozo-4.cod
+RIM-COD-URL-3: Moozo-3.cod
+RIM-COD-URL-2: Moozo-2.cod
+RIM-COD-URL-1: Moozo-1.cod
+RIM-COD-Module-Name: Moozo
+RIM-COD-URL-20: Moozo-20.cod
