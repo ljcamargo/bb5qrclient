@@ -20,6 +20,7 @@ import cam.aedes.CMainScreen;
 public class Layout extends UserInterface {
 	
 	UiApplication theApp;
+	Strings strings;
 	
 	FontFamily fontFamily[] = FontFamily.getFontFamilies();
 
@@ -30,10 +31,10 @@ public class Layout extends UserInterface {
 	Bitmap main = null;
 	Bitmap btn = null;
 	String logo = "img/logo.png";
-	String button = "img/button.png";
-	String button_on = "img/button_on.png";
-	String friends = "img/invite.png";
-	String friends_on = "img/invite_on.png";
+	String button = "img/button_notext1_off.png";
+	String button_on = "img/button_notext1_on.png";
+	String friends = "img/button_notext2_off.png";
+	String friends_on = "img/button_notext2_on.png";
 	String defSplash = "img/splash_360x480.png";
 	String blank = "img/blank.png";
 	
@@ -43,6 +44,7 @@ public class Layout extends UserInterface {
 		super(c);
 		UiApplication ui = UiApplication.getUiApplication();
 		theApp = (UiApplication) ui;	
+		strings = new Strings();
 		setUpAssets();
 	}
 	
@@ -145,16 +147,18 @@ public class Layout extends UserInterface {
 		   final BitmapField bmFieldSpan = new BitmapField(blankbmp,BitmapField.NON_FOCUSABLE);
 				
 		   CustomButtonField cbfFriends = 
-			   new CustomButtonField(btnw, "", friendsoff.getBitmap(), friendson.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
+			   new CustomButtonField(btnw, strings.getString("invite_friends"), friendsoff.getBitmap(), friendson.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
 			   protected boolean navigationClick(int status, int time)
 			    {
 			    	c.action_callback("web_friends", "", "");
 			       return true;
 			    }
 		   };
+		   
+		   
 		    
 		   CustomButtonField cbfButton = 
-			   new CustomButtonField(btnw, "", buttonoff.getBitmap(), buttonon.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
+			   new CustomButtonField(btnw, strings.getString("read_qr"), buttonoff.getBitmap(), buttonon.getBitmap(),Field.FOCUSABLE | Field.FIELD_HCENTER | Field.FIELD_VCENTER) {
 				protected boolean navigationClick(int status, int time)
 			    {
 			       c.action_callback("qr_start", "", "");
@@ -163,8 +167,9 @@ public class Layout extends UserInterface {
 		   };
 		
 
-			
+		
 	    vfmButton.add(cbfButton);
+	    vfmButton.add(bmFieldSpan);
 	    vfmButton.add(cbfFriends);
 		fm_MainHolder.add(vfmButton);
 			

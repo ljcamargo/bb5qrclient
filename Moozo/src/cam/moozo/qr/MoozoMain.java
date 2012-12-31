@@ -12,11 +12,15 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import cam.aedes.CMainScreen;
 import om.ui.Layout;
+import om.ui.Strings;
 import net.rim.blackberry.api.browser.Browser;
+import net.rim.device.api.applicationcontrol.ApplicationPermissions;
+import net.rim.device.api.applicationcontrol.ApplicationPermissionsManager;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.MainScreen;
@@ -26,18 +30,29 @@ public class MoozoMain extends CMainScreen {
 	public UiApplication theApp;
 	String model = "/bar/id_bar/table/table_nr/fb/fb_id";
     String param = "/bar/id_bar/table/table_nr/fb/fb_id";
-    String baseurl = "http://dev.moozo.com.ar/moozo/webapi";
+    String baseurl = "http://dev.moozo.com.ar/moozo/webapi/checkin";
     String inviteurl = "http://dev.moozo.com.ar/moozo/webapi/friends";
+    String key = "84609bc63adb84151759d496144403b8";
     LabelField barcodeResult;
     ViewFinderScreen vfs;
+    Strings strings;
        
 
     public MoozoMain() {
     	UiApplication ui = UiApplication.getUiApplication();
 		theApp = (UiApplication) ui;
 		La = new Layout(this);
+		strings = new Strings();
 		Locale.setDefault(Locale.get(Locale.LOCALE_es, null));  
 		La.mainScreen(this);
+		ApplicationPermissionsManager manager = ApplicationPermissionsManager.getInstance();
+		int current = manager.getPermission(ApplicationPermissions.PERMISSION_RECORDING);
+		if (current != ApplicationPermissions.VALUE_ALLOW) {
+		    ApplicationPermissions permissions = new ApplicationPermissions();
+		    permissions.addPermission(ApplicationPermissions.PERMISSION_RECORDING);
+		    manager.invokePermissionsRequest(permissions);
+		}
+		
 		
     }
    
@@ -64,19 +79,31 @@ public class MoozoMain extends CMainScreen {
     }
     
     public void decodedQR() {
+    	
     	System.out.println("if valid, goto: "+baseurl+param);
     	if (paramIsValid(param)) {
+    		System.out.println("is valid, redirecting to:"+baseurl+param);
     		Browser.getDefaultSession().displayPage(baseurl+param);
     	} else {
+    		System.out.println("non valid: "+param);
+    		UiApplication.getUiApplication().invokeLater (new Runnable() {
+    		    public void run() 
+    		    {
+    		    	Dialog.alert(strings.getString("invalid_code"));
+    		    }
+    		});
     		
     	}
     }
     
     public boolean paramIsValid(String param) {
-    	if ((param.indexOf("table/")>=0)&&(param.indexOf("bar/"))>=0) {
+    	int locus = param.indexOf("api_key/");
+    	int sign = param.indexOf(key);
+    	if (locus>0&&sign>0) {
     		return true;
+    	} else {
+        	return false;
     	}
-    	return false;
     }
     
     public final class ViewFinderScreen extends MainScreen {
@@ -112,8 +139,7 @@ public class MoozoMain extends CMainScreen {
 			Vector formats = new Vector(1);
 
 			formats.addElement(BarcodeFormat.QR_CODE); 
-			hints.put(DecodeHintType.POSSIBLE_FORMATS, formats);
-			
+			hints.put(DecodeHintType.POSSIBLE_FORMATS, formats);			
 			
 			decoder = new BarcodeDecoder(hints);
 
@@ -126,33 +152,16 @@ public class MoozoMain extends CMainScreen {
 				public void barcodeDecoded(String rawText) {
 					System.out.println("RESULT    "+rawText);
 					param = rawText;
-					synchronized (Application.getEventLock()) {
-						decodedQR();
-					}
+					decodedQR();
 				}
 
 				public void barcodeDecodeProcessFinish() {
-					try {
-						scanner.stopScan();
-						
-					} catch (MediaException e) {
-						e.printStackTrace();
-					}
-					
-					try {
-						synchronized (Application.getEventLock()) {
-							UiApplication.getUiApplication().popScreen(ViewFinderScreen.this);
-						}
-					} catch (Exception e) {
-						
-					}
-					
+					terminateScanner();	
 				}
 			};
 			try {
 				scanner = new BarcodeScanner(decoder, listener);
 				viewFinder = scanner.getViewFinder();
-				//scanner.getVideoControl().setDisplayFullScreen(true);
 				add(viewFinder);
 				scanner.startScan();
 			} catch (Exception e) {
@@ -161,12 +170,7 @@ public class MoozoMain extends CMainScreen {
 				e.printStackTrace();
 			}
 		}
-		/*
-		protected boolean navigationClick(int arg0, int arg1) {
-			scanner.readNow();
-			return true;
-		}
-		 */
+		
 		public boolean onClose() {
 			terminateScanner();
 			return super.onClose();

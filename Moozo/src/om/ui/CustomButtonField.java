@@ -27,17 +27,18 @@ public class CustomButtonField extends Field
         try
         {
                 FontFamily fntFamily = FontFamily.forName("BBAlpha Sans");
-                font = fntFamily.getFont(Font.BOLD,14);              
+                font = fntFamily.getFont(Font.BOLD,20);              
         }
         catch(Exception e)
         {
-            font = Font.getDefault();
-          
+            font = Font.getDefault();          
         }
         graphics.setFont(font);
         graphics.setColor(Color.WHITE); 
         graphics.drawBitmap(0, 0, current_pic.getWidth(), current_pic.getHeight(), current_pic, 0, 0);
-        graphics.drawText(text, width, 7);
+        int x = (int)(current_pic.getWidth()-font.getAdvance(text))/2;
+        int y = (int)(current_pic.getHeight()-font.getHeight())/2;
+        graphics.drawText(text, x,y);
     }
     protected void onFocus(int direction) 
     {
